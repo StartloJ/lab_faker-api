@@ -1,0 +1,16 @@
+{{- if .Values.mock-config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "mockup-api.fullname" . }}
+  labels: {{- include "mockup-api.labels" . | nindent 4 }}
+data:
+  {{- if .Values.mock-config.db }}
+  db.json: |
+    {{- .Values.mock-config.db | nindent 4}}
+  {{- end }}
+  {{- if .Values.mock-config.routes }}
+  routes.json: |
+    {{- .Values.mock-config.routes | nindent 4}}
+  {{- end }}
+{{- end }}
